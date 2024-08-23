@@ -7,7 +7,7 @@ typedef long long ll;
 #define ln "\n"
 #define sz(x) (ll) (x).size()
 #define forn(i, s, e) for(ll i = s; i < e; i++)
-#define fast_cin() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
+#define fast_cin() ios_base::sync_with_stdio(false); cin.tie(NULL)
 
 ll getMiddleValue(ll i) {
     // return 1 + (2 + 2 * (i-1)) * (i-1)/2;
