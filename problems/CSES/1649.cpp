@@ -10,6 +10,7 @@ typedef vector<ll> v64;
 #define forn(i, s, e) for(ll i = s; i < e; i++)
 #define fast_cin() ios_base::sync_with_stdio(false); cin.tie(NULL)
 #define MOD 1000000007L
+#define dbg(x) cout << #x << " = " << x << ln
 
 #define LC 2*node+1
 #define RC 2*node+2

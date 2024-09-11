@@ -12,13 +12,13 @@ typedef pair<ll,ll> p64;
 #define ln "\n"
 #define sz(x) (ll) (x).size()
 #define forn(i, s, e) for(ll i = s; i < e; i++)
-#define fast_cin() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
+#define FAST_CIN ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 #define dbg(x) cout << #x << " = " << x << ln
 
 #define ordered_set tree<p64, null_type,less<p64>, rb_tree_tag,tree_order_statistics_node_update> 
 
 int main() {
-    fast_cin();
+    FAST_CIN;
     ll n; cin >> n;
 
     ordered_set s;
