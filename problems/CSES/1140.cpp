@@ -14,8 +14,6 @@ typedef vector<p64> vp64;
 #define ordered_set tree<p64, null_type,less<p64>, rb_tree_tag,tree_order_statistics_node_update> 
 #define dbg(x) cout << #x << " = " << x << ln
 
-v64 vec;
-
 int main() {
     FAST_CIN;
     ll n; cin >> n;
