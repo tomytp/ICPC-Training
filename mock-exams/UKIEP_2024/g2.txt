@@ -1,0 +1,9 @@
+1 2
+ab
+6 4
+abba
+baab
+abba
+baab
+abba
+baab
