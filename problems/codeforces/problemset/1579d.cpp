@@ -21,21 +21,21 @@ typedef vector<p64> vp64;
 void solve() {
     ll n; cin >> n;
     v64 v(n);
-    forn(i, 0 , n) cin >> v[i];
-    ll l = 0, r = n-1;
-    vp64 resp;
-    while (l != r) {
-        if (v[l] == 0) {
-            l++;
-            continue;
-        }
-        if (v[r] == 0) {
-            r--;
-            continue;
-        }
-        v[l]--; v[r]--;
-        resp.push_back({l+1, r+1});
+    priority_queue<p64> s;
+    forn(i, 0 , n) {
+        ll aux; cin >> aux;
+        if (aux > 0) s.emplace(aux, i+1);
     }
+    vp64 resp;
+    while (s.size() >= 2) {
+        auto a = s.top(); s.pop();
+        auto b = s.top(); s.pop();
+        a.first--; b.first--;
+        resp.emplace_back(a.second, b.second);
+        if (a.first > 0) s.push(a);
+        if (b.first > 0) s.push(b);
+    }
+
     cout << resp.size() << ln;
     forn (i, 0, resp.size()) {
         cout << resp[i].first << " " << resp[i].second << ln;
