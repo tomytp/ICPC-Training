@@ -42,7 +42,7 @@ class ProblemProcessor:
         directory = platform.get_directory(problem_id, group_id)
 
         directory.mkdir(parents=True, exist_ok=True)
-        (directory / 'makefile').write_text(self.makefile_path.read_text() + "\n" + self.makefile_increment)
+        (directory / 'makefile').write_text(self.makefile_path.read_text() + "\n\n" + self.makefile_increment)
         print(f"Using directory: {directory}")
         
         if tests := data.get('tests', []):
