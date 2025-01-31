@@ -18,7 +18,6 @@ def main():
     server.problem_processor = processor
     
     print(f"Starting Competitive Companion parser on port {PORT}")
-    print(f"Base directory: {Path(__file__).parent.absolute()}")
     print("Waiting for problems...\n")
     
     try:
