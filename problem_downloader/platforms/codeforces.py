@@ -23,7 +23,7 @@ class CodeforcesHandler(Platform):
     def get_directory(self, problem_id: str, group_id: Optional[str]) -> Path:
         if not group_id:
             raise ValueError("Contest/Gym ID is required for Codeforces")
-        return self.base_directory / 'cf' / group_id
+        return self.base_directory / 'codeforces' / group_id
 
     def get_solution_path(self, directory: Path, problem_id: str) -> Path:
         return directory / f'{problem_id}.cpp'
