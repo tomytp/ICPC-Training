@@ -10,7 +10,8 @@ class ProblemProcessor:
         self.base_dir = Path(__file__).parent.parent.absolute()
         self.lib_dir = Path(__file__).parent.parent.parent.absolute() / 'icpc-lib' / 'typst' / 'src' 
         self.template_path = self.lib_dir / 'template.cpp'
-        self.makefile_path = self.lib_dir / 'makefile' 
+        self.makefile_path = self.lib_dir / 'makefile'
+        self.makefile_increment = (self.base_dir/'problem_downloader'/'makefile.template').read_text()
 
     def save_test_cases(self, platform, directory: Path, problem_id: str, tests: list):
         for i, test in enumerate(tests, 1):
@@ -33,7 +34,7 @@ class ProblemProcessor:
 
         platform = get_handler_for_url(data['url'], self.base_dir)
         if not platform:
-            raise ValueErro0r(f"No handler found for URL: {data['url']}")
+            raise ValueError(f"No handler found for URL: {data['url']}")
 
         problem_id, group_id = platform.get_info_from_url(data['url'])
         print(f"\nProcessing problem: {problem_id}")
@@ -41,7 +42,7 @@ class ProblemProcessor:
         directory = platform.get_directory(problem_id, group_id)
 
         directory.mkdir(parents=True, exist_ok=True)
-        (directory / 'makefile').write_text(self.makefile_path.read_text())
+        (directory / 'makefile').write_text(self.makefile_path.read_text() + "\n" + self.makefile_increment)
         print(f"Using directory: {directory}")
         
         if tests := data.get('tests', []):
