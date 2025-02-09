@@ -1,21 +1,19 @@
-import yaml
-from typing import Tuple, Optional
 from pathlib import Path
-from platform import Platform
+from typing import Tuple
+from platforms import Platform, VJudgeHandler, KattisHandler, CodeforcesHandler, CsesHandler
+from problem_info import ProblemInfo
 
 class PlatformManager:
-    def __init__(self):
-        config_file = Path(__file__).parent.absolute() / 'platforms.yaml'
-        with open(config_file) as f:
-            config = yaml.safe_load(f)
-        self.platforms = {
-            name: Platform(name, platform_config)
-            for name, platform_config in config['platforms'].items()
-        }
+    def __init__(self, base_dir: Path):
+        self.platforms = [
+            VJudgeHandler(base_dir),
+            KattisHandler(base_dir),
+            CodeforcesHandler(base_dir),
+            CsesHandler(base_dir),
+        ]
     
-    def get_platform_and_ids(self, url: str) -> Tuple[Platform, str, Optional[str]]:
-        for platform in self.platforms.values():
-            if info := platform.get_problem_info(url):
-                problem_id, group_id = info
-                return platform, problem_id, group_id
+    def get_problem_info(self, url: str) -> Tuple[Platform, ProblemInfo]:
+        for platform in self.platforms:
+            if platform.matches_url(url):
+                return platform.get_info_from_url(url)
         raise ValueError(f"No matching platform found for URL: {url}")

@@ -1,10 +1,17 @@
+import re
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Optional, Tuple
+
+from problem_info import ProblemInfo
 
 class Platform(ABC):
     def __init__(self, base_dir: Path):
         self.base_directory = base_dir
+
+    @property
+    @abstractmethod
+    def URL_PATTERNS(self):
+        pass
 
     @abstractmethod
     def matches_url(self, url: str) -> bool:
@@ -12,21 +19,16 @@ class Platform(ABC):
         pass
 
     @abstractmethod
-    def get_info_from_url(self, url: str) -> Tuple[str, Optional[str]]:
-        """Extract problem ID and optional group ID from URL"""
+    def get_info_from_url(self, url: str) -> ProblemInfo:
+        """Extract problem information from URL"""
         pass
 
-    @abstractmethod
-    def get_directory(self, problem_id: str, group_id: Optional[str] = None) -> Path:
-        """Get directory where files should be saved"""
-        pass
+    def matches_url(self, url: str) -> bool:
+        return any(re.match(pattern, url) for pattern in self.URL_PATTERNS)
 
-    @abstractmethod
-    def get_solution_path(self, directory: Path, problem_id: str) -> Path:
-        """Get path for solution file"""
-        pass
-
-    @abstractmethod
-    def get_test_paths(self, directory: Path, problem_id: str, test_num: int) -> tuple[Path, Path]:
-        """Get paths for test case files"""
-        pass
+    def _get_problem_directory(self, platform: str, contest_id: str = None) -> Path:
+        """Internal method to generate problem directory path"""
+        base_path = self.base_directory / platform
+        if contest_id:
+            return base_path / contest_id
+        return base_path

@@ -1,1 +1,19 @@
-./vscode
+*./vscode
+
+# Ignore all files without extension
+*
+!*.*
+!*/
+
+# Ignore input and output files
+in*
+out*
+
+# Ignore makefiles
+[Mm]akefile
+
+# Keep .cpp files
+!*.cpp
+
+# Keep .gitignore
+!.gitignore
