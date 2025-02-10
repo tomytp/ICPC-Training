@@ -2,7 +2,6 @@ import http.server
 import json
 import time
 from datetime import datetime
-from problem_processor import ProblemProcessor
 
 class ContestProblemHandler(http.server.BaseHTTPRequestHandler):
     def do_POST(self):

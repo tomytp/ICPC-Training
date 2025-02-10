@@ -14,27 +14,26 @@ class VJudgeHandler(Platform):
 
     def get_info_from_url(self, url: str) -> ProblemInfo:
         """Extract problem information from URL"""
-        match = re.match(self.URL_PATTERN, url)
-        if not match:
-            raise ValueError(f"Invalid VJudge URL: {url}")
-        
-        platform, problem_id = match.groups()
-        platform = platform.lower()
-        
-        if platform == 'codeforces':
-            contest_id, letter = self._parse_codeforces_id(problem_id)
-            folder_path = self._get_problem_directory(platform, contest_id)
-            return ProblemInfo(
-                platform=platform,
-                problem_id=problem_id,
-                folder_path=folder_path,
-                file_name=letter.lower()
-            )
-        
-        folder_path = self._get_problem_directory(platform)
-        return ProblemInfo(
-            platform=platform,
-            problem_id=problem_id,
-            folder_path=folder_path,
-            file_name=problem_id.lower()
-        )
+        for pattern in self.URL_PATTERNS:
+            if match := re.match(pattern, url):     
+                platform, problem_id = match.groups()
+                platform = platform.lower()
+                
+                if platform == 'codeforces':
+                    contest_id, letter = self._parse_codeforces_id(problem_id)
+                    folder_path = self._get_problem_directory(platform, contest_id)
+                    return ProblemInfo(
+                        platform=platform,
+                        problem_id=problem_id,
+                        folder_path=folder_path,
+                        file_name=letter.lower()
+                    )
+                
+                folder_path = self._get_problem_directory(platform)
+                return ProblemInfo(
+                    platform=platform,
+                    problem_id=problem_id,
+                    folder_path=folder_path,
+                    file_name=problem_id.lower()
+                )
+        raise ValueError(f"Invalid VJudge URL: {url}")
