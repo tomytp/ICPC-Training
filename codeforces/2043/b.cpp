@@ -18,23 +18,32 @@ typedef vector<ll> v64;
 
 const ll INF = 0x3f3f3f3f3f3f3f3fll;
 
-mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
+ll reduce(ll soma) {
+    if (soma < 10) return soma;
+    ll nsoma = 0;
+    while (soma > 0) {
+        nsoma += soma % 10;
+        soma /= 10;
+    }
+    
+    return reduce(nsoma);
+}
 
-int uniform(int l, int r){
-	uniform_int_distribution<int> uid(l, r);
-	return uid(rng);
+void solve() {
+    ll n, d; cin >> n >> d;
+    ll pq = reduce(d * n);
+    cout << 1 << " ";
+
+    if (pq % 3 == 0) cout << 3 << " "; 
+    if (d == 5) cout << 5 << " ";
+
+    if (pq == 9) cout << 9 << " ";
+    cout << ln;
 }
 
 int main(){
     _;
-    ll n = uniform(2, 100);
-    ll m = uniform(2, 8);
-    cout << n << " " << m << ln;
-    forn(i, 0, n) {
-        forn(j, 0, m) {
-            cout << "YN"[uniform(0, 1)];
-        }
-        cout << ln;
-    }
+    ll t; cin >> t;
+    while (t--) solve();
     return 0;
 }

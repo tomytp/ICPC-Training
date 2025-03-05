@@ -92,6 +92,7 @@ int main(){
     mask = (1<<m) -1;
     vector<ll> v;
     ll found = -1;
+    bool notzero = false;
     forn(i, 0, n) {
         ll curr = 0;
         forn(j, 0, m) {
@@ -99,6 +100,7 @@ int main(){
             curr <<= 1;
             if (aux == 'Y'){
                 curr |= 1;
+                notzero = true;
             } 
         }
         if (curr == mask && found == -1) found = i;
@@ -106,13 +108,17 @@ int main(){
         if (pos[curr] == -1) pos[curr] = i;
         v.push_back(curr);
     }
+    if (!notzero) {
+        cout << "No\n";
+        return 0;
+    }
 
     if (found != -1) {
-        ll a = 0;
+        ll a = -1;
         ll ia = -1;
         forn(i, 0, n) {
             if (i == found) continue;
-            if (__builtin_popcountll(v[i]) > __builtin_popcountll(a)) {
+            if (a == -1 || __builtin_popcountll(v[i]) > __builtin_popcountll(a)) {
                 a = v[i];
                 ia = i;
             }

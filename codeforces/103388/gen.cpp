@@ -16,25 +16,29 @@ typedef vector<ll> v64;
     #define debug(x) (void)0
 #endif
 
-const ll INF = 0x3f3f3f3f3f3f3f3fll;
+mt19937_64 rng((ll) chrono::steady_clock::now().time_since_epoch().count());
 
-mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
-
-int uniform(int l, int r){
-	uniform_int_distribution<int> uid(l, r);
+ll uniform(ll l, ll r){
+	uniform_int_distribution<ll> uid(l, r);
 	return uid(rng);
 }
 
+const ll INF = 0x3f3f3f3f3f3f3f3fll;
+
 int main(){
     _;
-    ll n = uniform(2, 100);
-    ll m = uniform(2, 8);
-    cout << n << " " << m << ln;
-    forn(i, 0, n) {
-        forn(j, 0, m) {
-            cout << "YN"[uniform(0, 1)];
-        }
-        cout << ln;
+    ll y = uniform(1, 20);
+    ll n = uniform(1, 20);
+    cout << y << " " << n << ln;
+    forn(i, 0, y) {
+        cout << uniform(0, 10) << " \n"[i==y-1];
     }
+    forn(i, 0, n) {
+        ll l = uniform(1, y);
+        ll r = uniform(l, y) - l;
+        ll val = uniform(1, 10);
+        cout << l << " " << val << " " << r << ln;
+    }
+
     return 0;
 }

@@ -18,23 +18,28 @@ typedef vector<ll> v64;
 
 const ll INF = 0x3f3f3f3f3f3f3f3fll;
 
-mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
+void solve() {
+    ll n; cin >> n;
+    v64 v(n), pos(n, 0), neg(n, 0);
+    forn(i, 0, n) cin >> v[i];
+    forn(i, 0, n) {
+        pos[i] = (i==0 ? 0 : pos[i-1]) + (v[i] > 0? v[i] : 0);
+    }
+    for(ll i = n-1; i >= 0; i--) {
+        neg[i] = (i==n-1? 0 : neg[i+1]) + (v[i] < 0? -v[i] : 0);
+    }
 
-int uniform(int l, int r){
-	uniform_int_distribution<int> uid(l, r);
-	return uid(rng);
+    ll ans = max(pos[n-1], neg[0]);
+    forn(i, 1, n) {
+        ans = max(ans, pos[i-1] + neg[i]);
+    }
+
+    cout << ans << ln;
 }
 
 int main(){
     _;
-    ll n = uniform(2, 100);
-    ll m = uniform(2, 8);
-    cout << n << " " << m << ln;
-    forn(i, 0, n) {
-        forn(j, 0, m) {
-            cout << "YN"[uniform(0, 1)];
-        }
-        cout << ln;
-    }
+    ll t; cin >> t;
+    while (t--) solve();
     return 0;
 }

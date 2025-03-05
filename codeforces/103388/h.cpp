@@ -18,23 +18,31 @@ typedef vector<ll> v64;
 
 const ll INF = 0x3f3f3f3f3f3f3f3fll;
 
-mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
-
-int uniform(int l, int r){
-	uniform_int_distribution<int> uid(l, r);
-	return uid(rng);
-}
-
 int main(){
     _;
-    ll n = uniform(2, 100);
-    ll m = uniform(2, 8);
-    cout << n << " " << m << ln;
+    ll n, k; cin >> n >> k;
+    map<ll, v64> idx, vals;
     forn(i, 0, n) {
-        forn(j, 0, m) {
-            cout << "YN"[uniform(0, 1)];
-        }
-        cout << ln;
+        ll val, color; cin >> val >> color;
+        idx[color].push_back(i);
+        vals[color].push_back(val);
     }
+    v64 ans(n);
+    for (auto& [color, vec] : vals) {
+        sort(vec.begin(), vec.end());
+        forn(i, 0, vec.size()) {
+            ans[idx[color][i]] = vec[i];
+        }
+    }
+
+    bool sorted = true;
+    forn(i, 1, n) {
+        if (ans[i] < ans[i-1]) {
+            sorted = false;
+            break;
+        }
+    }
+
+    cout << (sorted? "Y" : "N") << ln;
     return 0;
 }

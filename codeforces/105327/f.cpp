@@ -18,23 +18,15 @@ typedef vector<ll> v64;
 
 const ll INF = 0x3f3f3f3f3f3f3f3fll;
 
-mt19937 rng((int) chrono::steady_clock::now().time_since_epoch().count());
-
-int uniform(int l, int r){
-	uniform_int_distribution<int> uid(l, r);
-	return uid(rng);
-}
-
 int main(){
     _;
-    ll n = uniform(2, 100);
-    ll m = uniform(2, 8);
-    cout << n << " " << m << ln;
-    forn(i, 0, n) {
-        forn(j, 0, m) {
-            cout << "YN"[uniform(0, 1)];
-        }
-        cout << ln;
+    v64 fib(45);
+    fib[0] = 1;
+    fib[1] = 1;
+    forn(i, 2, 45) {
+        fib[i] = fib[i-1] + fib[i-2];
     }
+    ll n; cin >> n;
+    cout << fib[n] << ln;
     return 0;
 }
