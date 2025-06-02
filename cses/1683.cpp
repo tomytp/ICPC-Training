@@ -20,36 +20,43 @@ const ll INF = 0x3f3f3f3f3f3f3f3fll;
 
 vector<bool> visited;
 
-void dfs(ll v, vector<v64>& g, vector<ll> &out) {
-    visited[v] = true;
-    for(auto u : g[v]) if(!visited[u]) dfs(u, g, out);
-    out.push_back(v);
+void dfs(ll u, vector<v64>& g, v64& order) {
+    visited[u] = true;
+    for(auto v: g[u]) {
+        if (!visited[v]) dfs(v, g, order);
+    }
+    order.push_back(u);
 }
 
 v64 scc(vector<v64>& g) {
-    int n = g.size();
+    ll n = g.size();
     v64 order, roots(n, 0);
 
-    vector<v64> adj_rev(n);
-    forn(u, 0, n) for (ll v : g[u]) adj_rev[v].push_back(u);
+    vector<v64> rev(n);
+    forn(u, 0, n) for(ll v: g[u]) rev[v].push_back(u);
 
     visited.assign(n, false);
-    forn(i, 0, n) if (!visited[i]) dfs(i, g, order);
+    forn(i, 0, n) {
+        if (!visited[i]) {
+            dfs(i, g, order);
+        }
+    }
     reverse(order.begin(), order.end());
-    
+
     visited.assign(n, false);
     ll curr_comp = 0;
-    for (auto v : order) {
-        if (!visited[v]) {
-            v64 component; dfs(v, adj_rev, component);
-            for (auto u : component) roots[u] = curr_comp;
+    for(auto u : order) {
+        if (!visited[u]) {
+            v64 component;
+            dfs(u, rev, component);
+            for(auto v : component) {
+                roots[v] = curr_comp;
+            }
             curr_comp++;
         }
     }
-
-    return roots;          
+    return roots;
 }
-
 
 int main(){
     _;
@@ -60,8 +67,12 @@ int main(){
         a--; b--;
         g[a].push_back(b);
     }
-    auto g2 = scc(g);
-    cout << *max_element(g2.begin(), g2.end()) + 1 << ln;
-    forn(i, 0, g2.size()) cout << g2[i] + 1<< " \n"[i==g2.size() - 1];
+
+    auto roots = scc(g);
+
+    cout << *max_element(roots.begin(), roots.end()) + 1 << ln;
+    forn(i, 0, roots.size()) {
+        cout << roots[i] + 1 << " \n"[i==roots.size() - 1];
+    }
     return 0;
 }
